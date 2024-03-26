@@ -1,0 +1,5 @@
+.contact-card {
+    border: 1px solid #ccc; /* Thin gray border */
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}

@@ -1,42 +1,49 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	let backendUrl="https://playground.4geeks.com/apis/fake/contact/"
+	let agenda_slug="Cantrell24"
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			contacts:[]
 		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+		actions:{
+			deleteContact: async (contact_id) => {
+				try {
+					const response = await fetch (`https://playground.4geeks.com/apis/fake/contact/${contact_id}`,{
+						method: "DELETE",
+						headers: {
+							"content-type":"application/json"
+						},
+					})
+				} catch (error) {
+					console.log(error)
+				}
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+			getContacts: ()=>{
+				fetch(backendUrl+"/agenda/Cantrell24")
+				.then(response=>response.json())
+				.then(data=>setStore({contacts:data}))
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			getOneContact: async (contact_id)=>{
+				fetch(backendUrl+`/${contact_id}`)
+				.then(response=>response.json())
+				.then(data=>setStore({contact:data}))
+			},	
+			addContacts:async(fullName,address,phone,email)=>{
+				let opt={
+					method:"POST",
+					headers: {
+						"Content-Type":"application/json"
+					},
+					body:JSON.stringify({
+						full_name:fullName,
+						email:email,
+						address:address,
+						phone:phone,
+						agenda_slug:agenda_slug
+					})
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+				}
+				let response=fetch
 			}
 		}
 	};
