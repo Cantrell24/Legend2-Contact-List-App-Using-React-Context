@@ -1,6 +1,8 @@
 import React, {useContext} from "react";
 import "../../styles/ContactCard.css"
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
+
 
 
 const ContactCard = ({contact}) => {
@@ -27,10 +29,10 @@ const ContactCard = ({contact}) => {
                     </div>
                 </div>
                 <div className="d-flex w-25 pt-5">
-                    <link to={`/edit-contact/${contact.id}`}>
+                    <Link to={`/edit-contact?id=${contact.id}`}>
                     <button className="btn btn-warning"
                     ><i className="fa-solid fa-pencil me-5"></i></button>
-                    </link>
+                    </Link>
                    <button 
                    className="btn btn-danger"
                    style={{"height":"50px"}}

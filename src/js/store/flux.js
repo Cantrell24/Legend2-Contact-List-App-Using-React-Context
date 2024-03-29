@@ -43,7 +43,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 
 				}
-				let response=fetch
 			}
 		}
 	};
