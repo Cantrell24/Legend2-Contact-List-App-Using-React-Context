@@ -9,6 +9,8 @@ const Home = () => {
 	const {store,actions} =useContext(Context)
 	const [data, setData] = useState(null);
 
+	const isButtonActive = false;
+
 	useEffect(() => {
 		actions.getContacts()
 	}, [store.contacts]);
@@ -27,16 +29,51 @@ const Home = () => {
 					className="panel-collapse collapse show"
 					aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						{store.contacts.map((contact,index)=>{
-							return (
-								<ContactCard key={index} contact={contact}/>
-							)
-						})}
+						{RenderContacts()}
+
 					</ul>
 				</div>
+
+				{/* Conditional Rendering Example */}
+				<div>
+					{RenderButton()}
+				</div>
+
 			</div>
 		</div>
 	);
+	
+	function RenderContacts() {
+			if(store.contacts==undefined){
+				return(
+					<h1>API is down!</h1>
+				)
+			}
+			else
+			{
+				return(
+					store.contacts.map((contact,index)=>{
+						return (
+							<ContactCard key={index} contact={contact}/>
+						)
+					})
+				)
+			}
+	}
+
+	function RenderButton() {
+		if (2+2 == 5 ) {
+			return (
+				<Button></Button>
+			)
+		}
+		else
+		{
+			return (
+				<div>Button not active</div>
+			)
+		}
+	}
 };
 
 export default Home;

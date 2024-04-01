@@ -1,5 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	let backendUrl="https://playground.4geeks.com/apis/fake/contact/"
+	let backendUrl="https://playground.4geeks.com/apis/fake/contact"
 	let agenda_slug="Cantrell24"
 	return {
 		store: {
@@ -20,7 +20,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getContacts: ()=>{
 				fetch(backendUrl+"/agenda/Cantrell24")
-				.then(response=>response.json())
+				.then(response=>{
+						console.log(response)
+				response.json()})
 				.then(data=>setStore({contacts:data}))
 			},
 			getOneContact: async (contact_id)=>{
