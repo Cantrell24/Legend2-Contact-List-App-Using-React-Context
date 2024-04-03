@@ -4,76 +4,59 @@ import ContactCard from "../component/ContactCard.jsx";
 import { Link } from "react-router-dom";
 import { EditContact } from "../component/EditContact.jsx";
 
-
 const Home = () => {
-	const {store,actions} =useContext(Context)
-	const [data, setData] = useState(null);
+  const { store, actions } = useContext(Context);
+  const [data, setData] = useState(null);
 
-	const isButtonActive = false;
+  const isButtonActive = false;
 
-	useEffect(() => {
-		actions.getContacts()
-	}, [store.contacts]);
+  useEffect(() => {
+    actions.getContacts();
+  }, [store.contacts]);
 
-	return (
-		<div className="container">
-			<div>
-				<p className="text-right my-3">
-					<Link to="/add-contact"><button type="button" className="btn btn-success" to="/add">
-						Add new contact
-					</button>
-					</Link>
-				</p>
-				<div
-					id="contacts"
-					className="panel-collapse collapse show"
-					aria-expanded="true">
-					<ul className="list-group pull-down" id="contact-list">
-						{RenderContacts()}
+  return (
+    <div className="container">
+      <div>
+        <p className="text-right my-3">
+          <Link to="/add-contact">
+            <button type="button" className="btn btn-success" to="/add">
+              Add new contact
+            </button>
+          </Link>
+        </p>
+        <div
+          id="contacts"
+          className="panel-collapse collapse show"
+          aria-expanded="true"
+        >
+          <ul className="list-group pull-down" id="contact-list">
+            {RenderContacts()}
+          </ul>
+        </div>
 
-					</ul>
-				</div>
+        {/* Conditional Rendering Example */}
+        <div>{RenderButton()}</div>
+      </div>
+    </div>
+  );
 
-				{/* Conditional Rendering Example */}
-				<div>
-					{RenderButton()}
-				</div>
+  function RenderContacts() {
+    if (store.contacts == undefined) {
+      return <h1>API is down!</h1>;
+    } else {
+      return store.contacts.map((contact, index) => {
+        return <ContactCard key={index} contact={contact} />;
+      });
+    }
+  }
 
-			</div>
-		</div>
-	);
-	
-	function RenderContacts() {
-			if(store.contacts==undefined){
-				return(
-					<h1>API is down!</h1>
-				)
-			}
-			else
-			{
-				return(
-					store.contacts.map((contact,index)=>{
-						return (
-							<ContactCard key={index} contact={contact}/>
-						)
-					})
-				)
-			}
-	}
-
-	function RenderButton() {
-		if (2+2 == 5 ) {
-			return (
-				<Button></Button>
-			)
-		}
-		else
-		{
-			return (
-				<div>Button not active</div>
-			)
-		}
-	}
+  function RenderButton() {
+    if (2 + 2 == 5) {
+      return <Button></Button>;
+    } else {
+      return <div>Button not active</div>;
+    }
+  }
 };
 
 export default Home;
